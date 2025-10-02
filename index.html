@@ -1,0 +1,386 @@
+<!doctype html>
+
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>默纤特区政府 • Moxan S.A. Gov.</title>
+  <!--
+    单文件网站（可按需拆分为 index.html, styles.css, scripts.js）
+    使用说明：
+      - 将带有 /* REPLACE */ 注释的路径替换为你的图片/音频/素材路径。
+      - 若要拆分文件：把 <style> 内容放入 styles.css，把 <script> 放入 scripts.js 并在 <head> 或底部引入。
+  -->
+  <style>
+    :root{
+      --bg:#081221;
+      --glass: rgba(255,255,255,0.06);
+      --accent:#6EE7B7;
+      --accent-2:#7dd3fc;
+      --text:#e6f0f6;
+      --muted:rgba(230,240,246,0.7);
+      --card-shadow: 0 8px 24px rgba(2,6,23,0.6);
+      --glass-border: rgba(255,255,255,0.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:linear-gradient(180deg,#041026 0%, #071426 60%);color:var(--text);}
+    a{color:inherit;text-decoration:none}/* Top hero */
+.hero{
+  position:relative;min-height:55vh;display:grid;place-items:center;overflow:hidden;
+}
+.hero .bg{
+  position:absolute;inset:0;background-size:cover;background-position:center center;filter:brightness(.55) saturate(.9) contrast(.95);transform:scale(1.03);transition:transform .9s ease;}
+.hero .overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(4,8,20,0.2), rgba(2,6,23,0.6));}
+.hero .title-card{position:relative;z-index:2;text-align:center;padding:3rem 1rem;border-radius:16px;backdrop-filter: blur(6px) saturate(120%);background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));border:1px solid var(--glass-border);box-shadow:var(--card-shadow);max-width:1100px;width:100%;}
+.hero h1{font-size:clamp(1.6rem,4vw,3.2rem);margin:.1rem 0 0.4rem;font-weight:700;letter-spacing:0.6px}
+.hero p.lead{margin:0 0 1rem;color:var(--muted)}
+.hero .controls{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.6rem;padding:.6rem 1rem;border-radius:12px;background:var(--glass);border:1px solid var(--glass-border);cursor:pointer;font-weight:600}
+.btn.accent{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#052225;border:none}
+
+/* scrolling section layout */
+main{max-width:1200px;margin:-4rem auto 4rem;padding:0 1rem;}
+.section{margin:3.5rem 0}
+.grid{display:grid;gap:1rem}
+
+/* two-column layout */
+.cols-3{grid-template-columns: 1fr 360px;align-items:start}
+@media (max-width:980px){.cols-3{grid-template-columns:1fr}}
+
+/* glass card */
+.card{background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:1rem;box-shadow:var(--card-shadow);}
+
+/* member list vertical */
+.members{display:flex;flex-direction:column;gap:.8rem}
+.member{display:flex;gap:.8rem;align-items:center}
+.member .avatar{width:76px;height:76px;border-radius:10px;flex:0 0 76px;background:linear-gradient(180deg,rgba(255,255,255,0.03),transparent);display:grid;place-items:center;border:1px solid rgba(255,255,255,0.04);overflow:hidden}
+.member .avatar img{width:100%;height:100%;object-fit:cover}
+.member .meta{flex:1}
+.member .meta h4{margin:0;font-size:1rem}
+.member .meta p{margin:2px 0 0;color:var(--muted);font-size:.9rem}
+
+/* maps gallery with different ratios */
+.maps{display:flex;gap:10px;flex-wrap:wrap;align-items:stretch}
+.maps .map{flex:1 1 220px;border-radius:12px;overflow:hidden;min-height:140px;position:relative}
+.maps .map.ratio-16-9{aspect-ratio:16/9}
+.maps .map.ratio-4-3{aspect-ratio:4/3}
+.maps .map.ratio-3-4{aspect-ratio:3/4}
+.maps .map img{width:100%;height:100%;object-fit:cover;display:block;}
+.maps .map .caption{position:absolute;left:8px;bottom:8px;padding:.4rem .6rem;border-radius:8px;background:rgba(0,0,0,0.35);backdrop-filter:blur(4px);font-size:.85rem}
+
+/* gallery grid */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.gallery-item{border-radius:10px;overflow:hidden;position:relative;min-height:120px}
+.gallery-item img{width:100%;height:100%;object-fit:cover}
+.gallery-item .g-caption{position:absolute;left:6px;bottom:6px;background:linear-gradient(90deg,rgba(0,0,0,.45),transparent);padding:.3rem .5rem;border-radius:8px;font-size:.82rem}
+
+/* comment list */
+.comments{display:flex;flex-direction:column;gap:.6rem}
+.comment{padding:.6rem;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.03)}
+
+/* small utilities */
+.meta-row{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.muted{color:var(--muted)}
+
+/* animations */
+.float-up{transform:translateY(8px);opacity:0;animation:floatUp .9s cubic-bezier(.2,.9,.26,1) forwards}
+@keyframes floatUp{to{transform:none;opacity:1}}
+.pulse{animation:pulseGlow 2.6s infinite}
+@keyframes pulseGlow{0%{box-shadow:0 0 0 0 rgba(110,231,183,0.0)}50%{box-shadow:0 0 30px 6px rgba(110,231,183,0.06)}100%{box-shadow:0 0 0 0 rgba(110,231,183,0.0)}}
+
+/* tiny footer */
+footer{padding:1.2rem 0;text-align:center;color:var(--muted);font-size:.9rem}
+
+/* language & theme toggles */
+.toggles{display:flex;gap:.5rem;align-items:center}
+.chip{padding:.35rem .6rem;border-radius:999px;border:1px solid var(--glass-border);background:transparent;font-weight:600;cursor:pointer}
+
+/* responsive tweaks */
+@media (max-width:640px){.hero .title-card{padding:1.6rem}.cols-3{grid-template-columns:1fr}}
+
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="bg" id="heroBg" style="background-image:url('assets/hero-bg.jpg');">
+      <!-- REPLACE: assets/hero-bg.jpg -->
+    </div>
+    <div class="overlay"></div>
+    <div class="title-card float-up" role="banner">
+      <h1 data-i18n="title">默纤特区政府 <span style="font-weight:400">• Moxan S.A. Gov.</span></h1>
+      <p class="lead" data-i18n="subtitle">一个由玩家创建的虚构特区 — 娱乐与创造的自由天地。</p>
+      <div class="controls">
+        <button class="btn accent" id="anthemBtn" title="播放国歌">🎵 <span data-i18n="play_anthem">播放国歌 / Play Anthem</span></button>
+        <a class="btn" href="#maps" data-i18n="view_maps">查看行政疆域 / Maps</a>
+        <div class="toggles">
+          <button class="chip" id="langToggle">中文 / EN</button>
+          <button class="chip" id="themeToggle">主题</button>
+        </div>
+        <button class="btn" id="joinQqBtn">加入区委QQ群</button>
+      </div>
+    </div>
+  </header>  <main>
+    <section class="section cols-3 grid">
+      <div>
+        <div class="card" style="margin-bottom:1rem">
+          <h3 data-i18n="about_title">关于默纤特区</h3>
+          <p data-i18n="about_text">默纤特区（Moxan S.A. Gov.）是由Momo Trace发起的Minecraft伺服器自治组织。</p>
+          <div class="meta-row" style="margin-top:8px">
+            <span class="muted">成立：2025</span>
+            <span class="muted">•</span>
+            <span class="muted" data-i18n="members">成员：若干 玩家</span>
+          </div>
+        </div><div class="card" id="maps" style="margin-bottom:1rem">
+      <h3 data-i18n="maps_title">行政疆域地图 / Administrative Maps</h3>
+      <p class="muted" style="margin:6px 0">下方展示了几张不同比例的行政疆域示意图</p>
+      <div class="maps" id="mapsContainer">
+        <div class="map ratio-16-9 card">
+          <img src="assets/map-big.jpg" alt="Map wide" />
+          <div class="caption">总览地图 / Overview</div>
+        </div>
+        <div class="map ratio-4-3 card">
+          <img src="assets/map-medium.jpg" alt="Map medium" />
+          <div class="caption">中心部分 / Districts</div>
+        </div>
+        <div class="map ratio-3-4 card">
+          <img src="assets/map-city.jpg" alt="Map tall" />
+          <div class="caption">主城部分 / Center</div>
+        </div>
+      </div>
+      <!-- REPLACE: assets/map-wide.jpg, assets/map-medium.jpg, assets/map-tall.jpg -->
+    </div>
+
+    <div class="card">
+      <h3 data-i18n="gallery_title">风景图库 / Gallery</h3>
+      <p class="muted">点击任一图片查看大图与描述。图库模块化，便于扩展。</p>
+      <div class="gallery-grid" id="gallery">
+        <!-- 模板项：复制 .gallery-item 并替换图片与数据 -->
+        <div class="gallery-item card" data-caption-cn="东港灯塔" data-caption-en="East Harbor Lighthouse">
+          <img src="assets/gallery-1.jpg" alt="East Harbor Lighthouse" />
+          <div class="g-caption" data-i18n="gallery_item_1">东港灯塔 / East Harbor Lighthouse</div>
+        </div>
+        <div class="gallery-item card" data-caption-cn="暮色林地" data-caption-en="Duskwood Forest">
+          <img src="assets/gallery-2.jpg" alt="Duskwood Forest" />
+          <div class="g-caption">暮色林地 / Duskwood Forest</div>
+        </div>
+        <div class="gallery-item card" data-caption-cn="空中庭院" data-caption-en="Skyward Courtyard">
+          <img src="assets/gallery-3.jpg" alt="Skyward Courtyard" />
+          <div class="g-caption">空中庭院 / Skyward Courtyard</div>
+        </div>
+        <!-- REPLACE gallery images with your own. -->
+      </div>
+    </div>
+  </div>
+
+  <aside>
+    <div class="card">
+      <h3 data-i18n="committee_title">特区区委 & 委员</h3>
+      <p class="muted">竖向委员列表（占位照片，竖图）</p>
+      <div class="members" id="membersList">
+        <div class="member">
+          <div class="avatar"><img src="assets/momo.png" alt="Momo Trace"/></div>
+          <div class="meta"><h4>Momo Trace</h4><p class="muted">特区主席 • Chairman</p></div>
+        </div>
+        <div class="member">
+          <div class="avatar"><img src="assets/nasia.png" alt="Nasia"/></div>
+          <div class="meta"><h4>Nasia</h4><p class="muted">委员</p></div>
+        </div>
+        <div class="member">
+          <div class="avatar"><img src="assets/fille.png" alt="Fille_Qer"/></div>
+          <div class="meta"><h4>Fille_Qer</h4><p class="muted">委员</p></div>
+        </div>
+        <div class="member">
+          <div class="avatar"><img src="assets/boat.png" alt="boat"/></div>
+          <div class="meta"><h4>boat</h4><p class="muted">委员</p></div>
+        </div>
+        <!-- REPLACE avatars in assets/members/ with your own vertical photos. -->
+      </div>
+      <div style="margin-top:10px" class="meta-row">
+        <button class="btn" id="joinQqSide">加入QQ群</button>
+        <a class="btn" href="#" id="downloadMap">下载行政总览</a>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1rem">
+      <h4 data-i18n="quick_links">快速链接</h4>
+      <ul class="muted" style="padding-left:1rem;margin:8px 0">
+        <li>内务部频道</li>
+        <li>市容设计论坛</li>
+        <li>公共工程提案</li>
+      </ul>
+    </div>
+  </aside>
+</section>
+
+<section class="section">
+  <div class="card">
+    <h3 data-i18n="comments_title">特区介绍与留言 / Testimonials</h3>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:8px">
+      <div style="flex:1 1 320px">
+        <div class="comment"><strong>玩家A</strong>：这个特区的市政厅建筑太有风格了！</div>
+        <div class="comment"><strong>玩家B</strong>：爱上了这里的空中庭院。</div>
+      </div>
+      <div style="flex:1 1 320px">
+        <div class="comment"><strong>玩家C</strong>：区委活动很有趣。</div>
+        <div class="comment"><strong>玩家D</strong>：期待更多节日活动与观光团。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="card">
+    <h3 data-i18n="anthem_title">国歌 / Anthem</h3>
+    <p class="muted">点击顶部“播放国歌 / Play Anthem”按钮以播放。</p>
+    <audio id="anthemAudio" src="assets/riseup.mp3" preload="none"></audio>
+    <!-- REPLACE: assets/anthem.mp3 -->
+  </div>
+</section>
+
+  </main>  <footer>
+    默纤科技 ©2025 • All rights reserved.
+  </footer>  <!-- Modular scripts: 可抽离为 scripts.js -->  <script>
+    // Basic i18n dictionary (extendable)
+    const i18n = {
+      cn: {
+        title: '默纤特区政府 • Moxan S.A. Gov.',
+        subtitle: '一个由玩家创建的虚构特区 — 娱乐与创造的自由天地。',
+        play_anthem: '播放国歌 / Play Anthem',
+        view_maps: '查看行政疆域 / Maps',
+        about_title: '关于默纤特区',
+        about_text: '默纤特区（Moxan S.A. Gov.）是由一群热爱建筑、政治戏剧与社区活动的玩家在 Minecraft 服务器中共同创建的娱乐特区。这里有公共项目、模拟行政、以及面向全服的活动。网站风格偏艺术化与互动为主，非真实政府机构。',
+        members: '成员：若干 玩家',
+        maps_title: '行政疆域地图 / Administrative Maps',
+        gallery_title: '风景图库 / Gallery',
+        committee_title: '特区区委 & 委员',
+        quick_links: '快速链接',
+        comments_title: '特区介绍与留言 / Testimonials',
+        anthem_title: '国歌 / Anthem',
+        gallery_item_1: '东港灯塔 / East Harbor Lighthouse'
+      },
+      en: {
+        title: 'Moxan S.A. Gov. • 默纤特区政府',
+        subtitle: 'A player-made fictional special administrative region — a playground for creativity and entertainment.',
+        play_anthem: 'Play Anthem / 播放国歌',
+        view_maps: 'View Administrative Maps / 查看地图',
+        about_title: 'About Moxan S.A. Gov.',
+        about_text: 'Moxan S.A. Gov. is a player-created fictional SAR within a Minecraft server, focusing on community projects, simulated governance, and public events. This site is for entertainment purposes.',
+        members: 'Members: Several players',
+        maps_title: 'Administrative Maps',
+        gallery_title: 'Gallery',
+        committee_title: 'Committee & Members',
+        quick_links: 'Quick Links',
+        comments_title: 'Introduction & Comments',
+        anthem_title: 'Anthem',
+        gallery_item_1: 'East Harbor Lighthouse / 东港灯塔'
+      }
+    };
+
+    // initial language
+    let lang = 'cn';
+    const applyLang = (l)=>{
+      lang = l;
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key = el.getAttribute('data-i18n');
+        if(i18n[l] && i18n[l][key]) el.textContent = i18n[l][key];
+      });
+      // gallery captions that live in attributes
+      document.querySelectorAll('.gallery-item').forEach(g=>{
+        const cn = g.getAttribute('data-caption-cn');
+        const en = g.getAttribute('data-caption-en');
+        g.querySelector('.g-caption').textContent = (lang==='cn'? (cn||en) : (en||cn));
+      })
+    }
+    applyLang(lang);
+
+    // language toggle
+    document.getElementById('langToggle').addEventListener('click',()=>{
+      applyLang(lang==='cn'? 'en':'cn');
+      document.getElementById('langToggle').textContent = (lang==='cn'? '中文 / EN':'中文 / EN');
+    });
+
+    // theme toggle (simple invert)
+    let dark = true;
+    document.getElementById('themeToggle').addEventListener('click',()=>{
+      dark = !dark;
+      if(!dark){
+        document.documentElement.style.setProperty('--bg','#f7fafc');
+        document.documentElement.style.setProperty('--text','#0b1b24');
+        document.documentElement.style.setProperty('--glass','rgba(11,27,36,0.06)');
+      } else {
+        document.documentElement.style.setProperty('--bg','#081221');
+        document.documentElement.style.setProperty('--text','#e6f0f6');
+        document.documentElement.style.setProperty('--glass','rgba(255,255,255,0.06)');
+      }
+    });
+
+    // Play anthem
+    const anthem = document.getElementById('anthemAudio');
+    document.getElementById('anthemBtn').addEventListener('click',()=>{
+      if(anthem.paused){
+        anthem.play().catch(()=>{
+          alert('浏览器阻止自动播放，请点击页面内任意区域或在页面上允许播放。');
+        });
+        document.getElementById('anthemBtn').classList.add('pulse');
+      } else { anthem.pause(); document.getElementById('anthemBtn').classList.remove('pulse');}
+    });
+
+    // Join QQ group (password tooltip)
+    const qqLink = 'https://qm.qq.com/q/idYinBBjnq'; // provided by user
+    const qqPassword = 'msa'; // 提示密码：默纤特区简写
+    function openQq(){
+      const ok = confirm('即将打开QQ群加入页面。\n加入密码（若需要）: ' + qqPassword + '\n继续？');
+      if(ok) window.open(qqLink,'_blank');
+    }
+    document.getElementById('joinQqBtn').addEventListener('click',openQq);
+    document.getElementById('joinQqSide').addEventListener('click',openQq);
+
+    // Simple lightbox for gallery
+    document.getElementById('gallery').addEventListener('click', (ev)=>{
+      const item = ev.target.closest('.gallery-item');
+      if(!item) return;
+      const src = item.querySelector('img').src;
+      const caption = item.getAttribute('data-caption-' + (lang==='cn'? 'cn':'en')) || item.querySelector('.g-caption').textContent;
+      openLightbox(src, caption);
+    });
+
+    function openLightbox(src, caption){
+      const box = document.createElement('div');
+      box.style.position='fixed';box.style.inset=0;box.style.background='rgba(1,3,6,0.85)';box.style.display='grid';box.style.placeItems='center';box.style.zIndex=9999;
+      box.innerHTML = `<div style="max-width:95%;max-height:95%;padding:10px"><img src="${src}" style="max-width:100%;max-height:80vh;display:block;border-radius:8px;margin-bottom:6px"/><div style="color:#ddd;text-align:center">${caption}</div></div>`;
+      box.addEventListener('click',()=>box.remove());
+      document.body.appendChild(box);
+    }
+
+    // small visual flourish: parallax hero background move
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('mousemove', (e)=>{
+      const x = (e.clientX / window.innerWidth - 0.5) * 6;
+      const y = (e.clientY / window.innerHeight - 0.5) * 6;
+      heroBg.style.transform = `translate(${x}px,${y}px) scale(1.02)`;
+    });
+
+    // Accessibility: keyboard control for anthem
+    document.addEventListener('keydown',(e)=>{ if(e.key==='m'){ if(anthem.paused) anthem.play(); else anthem.pause(); } });
+
+    // Ready: tiny entrance animations
+    window.addEventListener('load', ()=>{ document.querySelectorAll('.float-up').forEach((el,i)=>setTimeout(()=>el.classList.remove('float-up'), 50+i*120)); });
+
+    // Helpful comment for modularization
+    /*
+      提示：
+      - 要将脚本与样式拆分为单文件：
+        * styles.css -> 把 <style> 内容复制到 styles.css
+        * scripts.js -> 把此 <script> 内容复制到 scripts.js, 并在 body 底部通过 <script src="scripts.js"></script> 引入- 资源目录建议组织：
+    /assets/hero-bg.jpg
+    /assets/map-wide.jpg
+    /assets/map-medium.jpg
+    /assets/map-tall.jpg
+    /assets/gallery-*.jpg
+    /assets/members/momo.jpg (竖向照片)
+    /assets/anthem.mp3
+*/
+
+  </script>
+</body>
+</html>
